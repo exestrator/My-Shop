@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <h1>My Shop</h1>
+
+    <div class="cart">
+        <div id="cart-info">Products in cart: 0</div>
+        <button id="clear-cart-btn">Clear cart</button>
+    </div>
+    <div class="filters">
+        <label>
+            Search:
+            <input type="text" id="search-input" placeholder="product name">
+        </label>
+    
+        <label>
+            Category:
+            <select id="category-select">
+                <option value="">All</option>
+                <option value="currency">Currency</option>
+                <option value="skins">Skins</option>
+            </select>
+        </label>
+    
+        <label>
+            Minimum price:
+            <input type="number" id="min-price-input" placeholder="from 0">
+        </label>
+    </div>
+    
+    <div id="results-info"></div>
+    
+    <div id="product-container" class="products"></div>
+
+</body>
+</html>
