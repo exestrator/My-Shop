@@ -115,6 +115,5 @@ clearCartBtn.addEventListener("click", () => {
     updateCartInfo();
 });
 
-// старт
 loadCart();
 renderProducts();
