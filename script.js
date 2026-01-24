@@ -1,24 +1,25 @@
 const products = [
-    { id: 1, title: "mini points", price: 0.01, category: "currency" },
-    { id: 2, title: "mini Beans", price: 1, category: "currency" },
-    { id: 3, title: "mini Coins", price: 10, category: "currency" },
+    { id: 1, title: "mini points", price: 0.01, category: "currency", rating: 4, image: "https://via.placeholder.com/200" },
+    { id: 2, title: "mini Beans", price: 1, category: "currency", rating: 5, image: "https://via.placeholder.com/200" },
+    { id: 3, title: "mini Coins", price: 10, category: "currency", rating: 3, image: "https://via.placeholder.com/200" },
 
-    { id: 4, title: "minigun: phantom", price: 150, category: "skins" },
-    { id: 5, title: "minigun: dragon", price: 100, category: "skins" },
-    { id: 6, title: "minigun: gold", price: 100, category: "skins" },
+    { id: 4, title: "minigun: phantom", price: 150, category: "skins", rating: 5, image: "https://via.placeholder.com/200" },
+    { id: 5, title: "minigun: dragon", price: 100, category: "skins", rating: 4, image: "https://via.placeholder.com/200" },
+    { id: 6, title: "minigun: gold", price: 100, category: "skins", rating: 4, image: "https://via.placeholder.com/200" },
 
-    { id: 7, title: "pistol: star crasher", price: 120, category: "skins" },
-    { id: 8, title: "pistol: neon rider", price: 80, category: "skins" },
-    { id: 9, title: "pistol: classic", price: 50, category: "skins" },
+    { id: 7, title: "pistol: star crasher", price: 120, category: "skins", rating: 5, image: "https://via.placeholder.com/200" },
+    { id: 8, title: "pistol: neon rider", price: 80, category: "skins", rating: 4, image: "https://via.placeholder.com/200" },
+    { id: 9, title: "pistol: classic", price: 50, category: "skins", rating: 3, image: "https://via.placeholder.com/200" },
 
-    { id: 10, title: "rifle: thunder", price: 180, category: "skins" },
-    { id: 11, title: "rifle: shadow", price: 130, category: "skins" },
-    { id: 12, title: "rifle: blaze", price: 90, category: "skins" },
+    { id: 10, title: "rifle: thunder", price: 180, category: "skins", rating: 5, image: "https://via.placeholder.com/200" },
+    { id: 11, title: "rifle: shadow", price: 130, category: "skins", rating: 4, image: "https://via.placeholder.com/200" },
+    { id: 12, title: "rifle: blaze", price: 90, category: "skins", rating: 3, image: "https://via.placeholder.com/200" },
 
-    { id: 13, title: "sniper: eagle eye", price: 200, category: "skins" },
-    { id: 14, title: "sniper: ghost", price: 160, category: "skins" },
-    { id: 15, title: "sniper: frost", price: 110, category: "skins" }
+    { id: 13, title: "sniper: eagle eye", price: 200, category: "skins", rating: 5, image: "https://via.placeholder.com/200" },
+    { id: 14, title: "sniper: ghost", price: 160, category: "skins", rating: 4, image: "https://via.placeholder.com/200" },
+    { id: 15, title: "sniper: frost", price: 110, category: "skins", rating: 4, image: "https://via.placeholder.com/200" }
 ];
+
 
 let cart = [];
 
@@ -81,25 +82,58 @@ function renderProducts() {
             : "No products found for your request.";
 
     filteredProducts.forEach(product => {
+
         const card = document.createElement("div");
         card.className = "product-card";
+
+        const img = document.createElement("img");
+        img.src = product.image || "https://via.placeholder.com/200";
+        img.alt = product.title;
 
         const title = document.createElement("h3");
         title.textContent = product.title;
 
+        const rating = document.createElement("div");
+        rating.className = "rating";
+        rating.textContent = "⭐".repeat(product.rating || 4);
+
         const price = document.createElement("p");
         price.textContent = "Price: " + product.price + " $";
 
-        const button = document.createElement("button");
-        button.textContent = "Add to cart";
+        const count = cart.filter(p => p.id === product.id).length;
 
-        button.addEventListener("click", () => {
+        const counter = document.createElement("div");
+        counter.className = "counter";
+
+        const minusBtn = document.createElement("button");
+        minusBtn.textContent = "−";
+
+        const countText = document.createElement("span");
+        countText.textContent = count;
+
+        const plusBtn = document.createElement("button");
+        plusBtn.textContent = "+";
+
+        minusBtn.addEventListener("click", () => {
+            const index = cart.findIndex(p => p.id === product.id);
+            if (index !== -1) {
+                cart.splice(index, 1);
+                saveCart();
+                updateCartInfo();
+                renderProducts();
+            }
+        });
+
+        plusBtn.addEventListener("click", () => {
             cart.push(product);
             saveCart();
             updateCartInfo();
+            renderProducts();
         });
 
-        card.append(title, price, button);
+        counter.append(minusBtn, countText, plusBtn);
+
+        card.append(img, title, rating, price, counter);
         productContainer.appendChild(card);
     });
 }
