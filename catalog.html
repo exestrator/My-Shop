@@ -8,47 +8,55 @@
 </head>
 <body>
 
-    <h1>My Shop</h1>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="catalog.html">Catalog</a></li>
-                <li><a href="about.html">About</a></li>
-            </ul>
-        </nav>
-    </header>
-    <div class="cart">
-        <div id="cart-info">Products in cart: 0</div>
-        <button id="clear-cart-btn">Clear cart</button>
-    </div>
-    <div class="filters">
-        <label>
-            Search:
-            <input type="text" id="search-input" placeholder="product name">
-        </label>
-    
-        <label>
-            Category:
-            <select id="category-select">
-                <option value="">All</option>
-                <option value="currency">Currency</option>
-                <option value="skins">Skins</option>
-            </select>
-        </label>
-    
-        <label>
-            Minimum price:
-            <input type="number" id="min-price-input" placeholder="from 0">
-        </label>
-    </div>
-    
-    <div id="results-info"></div>
-    
-    <div id="product-container" class="products"></div>
+<header>
+    <h1>🔥 My Game Shop</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="about.html">About</a>
+        <button id="theme-btn">🌙</button>
+    </nav>
+</header>
 
-<footer>
-    <p> 2026 My Shop</p>
-</footer>
+<div class="top-bar">
+    <div class="cart" id="open-cart">🛒 Items: <span id="cart-info">0</span></div>
+</div>
+
+<div class="filters">
+    <input id="search-input" placeholder="Search...">
+    <select id="category-select">
+        <option value="">All</option>
+        <option value="currency">Currency</option>
+        <option value="skins">Skins</option>
+    </select>
+    <input id="min-price-input" type="number" placeholder="Min $">
+    <select id="sort-select">
+        <option value="">Sort</option>
+        <option value="asc">Price ↑</option>
+        <option value="desc">Price ↓</option>
+    </select>
+</div>
+
+<div id="product-container" class="products"></div>
+
+<!-- CART MODAL -->
+<div id="cart-modal" class="modal hidden">
+    <div class="modal-content">
+        <h2>🛒 Your Cart</h2>
+
+        <div id="cart-list"></div>
+        <div id="cart-total"></div>
+
+        <input id="promo-input" placeholder="Promo: CODE10">
+        <button id="apply-promo">Apply</button>
+
+        <button id="clear-cart-modal" class="danger">Clear</button>
+        <button id="checkout-btn" class="success">Checkout</button>
+        <button id="close-cart">Close</button>
+    </div>
+</div>
+
+<footer>2026 © My Game Shop</footer>
+
 </body>
 </html>

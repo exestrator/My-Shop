@@ -1,153 +1,132 @@
-const products = [
-    { id: 1, title: "mini points", price: 0.01, category: "currency", rating: 4, image: "https://via.placeholder.com/200" },
-    { id: 2, title: "mini Beans", price: 1, category: "currency", rating: 5, image: "https://via.placeholder.com/200" },
-    { id: 3, title: "mini Coins", price: 10, category: "currency", rating: 3, image: "https://via.placeholder.com/200" },
-
-    { id: 4, title: "minigun: phantom", price: 150, category: "skins", rating: 5, image: "https://via.placeholder.com/200" },
-    { id: 5, title: "minigun: dragon", price: 100, category: "skins", rating: 4, image: "https://via.placeholder.com/200" },
-    { id: 6, title: "minigun: gold", price: 100, category: "skins", rating: 4, image: "https://via.placeholder.com/200" },
-
-    { id: 7, title: "pistol: star crasher", price: 120, category: "skins", rating: 5, image: "https://via.placeholder.com/200" },
-    { id: 8, title: "pistol: neon rider", price: 80, category: "skins", rating: 4, image: "https://via.placeholder.com/200" },
-    { id: 9, title: "pistol: classic", price: 50, category: "skins", rating: 3, image: "https://via.placeholder.com/200" },
-
-    { id: 10, title: "rifle: thunder", price: 180, category: "skins", rating: 5, image: "https://via.placeholder.com/200" },
-    { id: 11, title: "rifle: shadow", price: 130, category: "skins", rating: 4, image: "https://via.placeholder.com/200" },
-    { id: 12, title: "rifle: blaze", price: 90, category: "skins", rating: 3, image: "https://via.placeholder.com/200" },
-
-    { id: 13, title: "sniper: eagle eye", price: 200, category: "skins", rating: 5, image: "https://via.placeholder.com/200" },
-    { id: 14, title: "sniper: ghost", price: 160, category: "skins", rating: 4, image: "https://via.placeholder.com/200" },
-    { id: 15, title: "sniper: frost", price: 110, category: "skins", rating: 4, image: "https://via.placeholder.com/200" }
-];
-
-
-let cart = [];
-
-const cartInfo = document.getElementById("cart-info");
-const productContainer = document.getElementById("product-container");
-const clearCartBtn = document.getElementById("clear-cart-btn");
-const minPriceInput = document.getElementById("min-price-input");
-const resultsInfo = document.getElementById("results-info");
-const searchInput = document.getElementById("search-input");
-const categorySelect = document.getElementById("category-select");
-
-// загрузка корзины
-function loadCart() {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-        cart = JSON.parse(savedCart);
-    }
-    updateCartInfo();
-}
-
-function saveCart() {
-    localStorage.setItem("cart", JSON.stringify(cart));
-}
-
-function updateCartInfo() {
-    cartInfo.textContent = "Products in cart: " + cart.length;
-}
-
-// рендер товаров
-function renderProducts() {
-    productContainer.innerHTML = "";
-
-    let filteredProducts = products;
-
-    const searchText = searchInput.value.toLowerCase();
-    const selectedCategory = categorySelect.value;
-    const minPrice = minPriceInput.value;
-
-    if (searchText !== "") {
-        filteredProducts = filteredProducts.filter(product =>
-            product.title.toLowerCase().includes(searchText)
-        );
-    }
-
-    if (selectedCategory !== "") {
-        filteredProducts = filteredProducts.filter(product =>
-            product.category === selectedCategory
-        );
-    }
-
-    if (minPrice !== "") {
-        filteredProducts = filteredProducts.filter(product =>
-            product.price >= minPrice
-        );
-    }
-
-    resultsInfo.textContent =
-        filteredProducts.length > 0
-            ? "Found products: " + filteredProducts.length
-            : "No products found for your request.";
-
-    filteredProducts.forEach(product => {
-
-        const card = document.createElement("div");
-        card.className = "product-card";
-
-        const img = document.createElement("img");
-        img.src = product.image || "https://via.placeholder.com/200";
-        img.alt = product.title;
-
-        const title = document.createElement("h3");
-        title.textContent = product.title;
-
-        const rating = document.createElement("div");
-        rating.className = "rating";
-        rating.textContent = "⭐".repeat(product.rating || 4);
-
-        const price = document.createElement("p");
-        price.textContent = "Price: " + product.price + " $";
-
-        const count = cart.filter(p => p.id === product.id).length;
-
-        const counter = document.createElement("div");
-        counter.className = "counter";
-
-        const minusBtn = document.createElement("button");
-        minusBtn.textContent = "−";
-
-        const countText = document.createElement("span");
-        countText.textContent = count;
-
-        const plusBtn = document.createElement("button");
-        plusBtn.textContent = "+";
-
-        minusBtn.addEventListener("click", () => {
-            const index = cart.findIndex(p => p.id === product.id);
-            if (index !== -1) {
-                cart.splice(index, 1);
-                saveCart();
-                updateCartInfo();
-                renderProducts();
-            }
-        });
-
-        plusBtn.addEventListener("click", () => {
-            cart.push(product);
-            saveCart();
-            updateCartInfo();
-            renderProducts();
-        });
-
-        counter.append(minusBtn, countText, plusBtn);
-
-        card.append(img, title, rating, price, counter);
-        productContainer.appendChild(card);
+let products = [
+    {id:1,title:"mini points",price:0.01,category:"currency",stock:true,image:"https://picsum.photos/300?1"},
+    {id:2,title:"mini Beans",price:1,category:"currency",stock:true,image:"https://picsum.photos/300?2"},
+    {id:3,title:"mini Coins",price:10,category:"currency",stock:true,image:"https://picsum.photos/300?3"},
+   
+    {id:4,title:"minigun: phantom",price:150,category:"skins",stock:true,image:"https://picsum.photos/300?4"},
+    {id:5,title:"minigun: dragon",price:100,category:"skins",stock:true,image:"https://picsum.photos/300?5"},
+    {id:6,title:"minigun: gold",price:100,category:"skins",stock:false,image:"https://picsum.photos/300?6"},
+   
+    {id:7,title:"pistol: star crasher",price:120,category:"skins",stock:true,image:"https://picsum.photos/300?7"},
+    {id:8,title:"pistol: neon rider",price:80,category:"skins",stock:true,image:"https://picsum.photos/300?8"},
+    {id:9,title:"pistol: classic",price:50,category:"skins",stock:true,image:"https://picsum.photos/300?9"},
+   
+    {id:10,title:"rifle: thunder",price:180,category:"skins",stock:true,image:"https://picsum.photos/300?10"},
+    {id:11,title:"rifle: shadow",price:130,category:"skins",stock:true,image:"https://picsum.photos/300?11"},
+    {id:12,title:"rifle: blaze",price:90,category:"skins",stock:true,image:"https://picsum.photos/300?12"},
+   
+    {id:13,title:"sniper: eagle eye",price:200,category:"skins",stock:true,image:"https://picsum.photos/300?13"},
+    {id:14,title:"sniper: ghost",price:160,category:"skins",stock:true,image:"https://picsum.photos/300?14"},
+    {id:15,title:"sniper: frost",price:110,category:"skins",stock:true,image:"https://picsum.photos/300?15"}
+   ];
+   
+   let cart = JSON.parse(localStorage.getItem("cart")) || [];
+   let favorites = JSON.parse(localStorage.getItem("fav")) || [];
+   let promoActive = false;
+   
+   const pc = document.getElementById("product-container");
+   const cartInfo = document.getElementById("cart-info");
+   
+   const searchInput = document.getElementById("search-input");
+   const categorySelect = document.getElementById("category-select");
+   const minPriceInput = document.getElementById("min-price-input");
+   const sortSelect = document.getElementById("sort-select");
+   
+   const cartModal = document.getElementById("cart-modal");
+   const cartList = document.getElementById("cart-list");
+   const cartTotal = document.getElementById("cart-total");
+   const promoInput = document.getElementById("promo-input");
+   
+   function save(){ localStorage.setItem("cart",JSON.stringify(cart)); }
+   
+   function grouped(){
+    let m={};
+    cart.forEach(p=>m[p.id]?m[p.id].qty++:m[p.id]={...p,qty:1});
+    return Object.values(m);
+   }
+   
+   function updateTop(){
+    let g=grouped();
+    let items=g.reduce((s,p)=>s+p.qty,0);
+    cartInfo.textContent=items;
+   }
+   
+   function renderProducts(){
+    pc.innerHTML="";
+    let list=[...products];
+   
+    if(searchInput.value) list=list.filter(p=>p.title.toLowerCase().includes(searchInput.value.toLowerCase()));
+    if(categorySelect.value) list=list.filter(p=>p.category===categorySelect.value);
+    if(minPriceInput.value) list=list.filter(p=>p.price>=minPriceInput.value);
+    if(sortSelect.value==="asc") list.sort((a,b)=>a.price-b.price);
+    if(sortSelect.value==="desc") list.sort((a,b)=>b.price-a.price);
+   
+    list.forEach(p=>{
+     let c=document.createElement("div");
+     c.className="product-card";
+   
+     c.innerHTML=`
+      <img src="${p.image}">
+      <h3>${p.title}</h3>
+      <div>$${p.price}</div>
+      <div class="stock" style="color:${p.stock?"green":"red"}">${p.stock?"In stock":"Out of stock"}</div>
+     `;
+   
+     let fav=document.createElement("button");
+     fav.className="fav";
+     fav.textContent=favorites.includes(p.id)?"❤️":"🤍";
+     fav.onclick=()=>{favorites.includes(p.id)?favorites=favorites.filter(i=>i!==p.id):favorites.push(p.id);
+      localStorage.setItem("fav",JSON.stringify(favorites)); renderProducts();};
+   
+     let counter=document.createElement("div");
+     counter.className="counter";
+   
+     let minus=document.createElement("button");
+     minus.textContent="−";
+     minus.onclick=()=>{let i=cart.findIndex(x=>x.id===p.id);if(i!=-1)cart.splice(i,1);save();updateTop();renderProducts();};
+   
+     let plus=document.createElement("button");
+     plus.textContent="+";
+     plus.disabled=!p.stock;
+     plus.onclick=()=>{cart.push(p);save();updateTop();renderProducts();};
+   
+     counter.append(minus,plus);
+     c.append(fav,counter);
+     pc.appendChild(c);
     });
-}
-
-// события
-searchInput.addEventListener("input", renderProducts);
-categorySelect.addEventListener("change", renderProducts);
-minPriceInput.addEventListener("input", renderProducts);
-
-clearCartBtn.addEventListener("click", () => {
-    cart = [];
-    saveCart();
-    updateCartInfo();
-});
-
-loadCart();
-renderProducts();
+   }
+   
+   function renderCart(){
+    cartList.innerHTML="";
+    let g=grouped(),sub=0;
+   
+    g.forEach(i=>{
+     sub+=i.price*i.qty;
+     let r=document.createElement("div");
+     r.className="cart-row";
+     r.textContent=`${i.title} x ${i.qty}`;
+     cartList.appendChild(r);
+    });
+   
+    let d=0;
+    if(sub>300) d+=sub*0.1;
+    if(promoActive) d+=sub*0.1;
+   
+    cartTotal.innerHTML=`Subtotal: $${sub}<br>Discount: $${d.toFixed(2)}<br><b>Total: $${(sub-d).toFixed(2)}</b>`;
+   }
+   
+   /* EVENTS */
+   document.getElementById("open-cart").onclick=()=>{renderCart();cartModal.classList.remove("hidden");};
+   document.getElementById("close-cart").onclick=()=>cartModal.classList.add("hidden");
+   
+   document.getElementById("apply-promo").onclick=()=>{promoActive=promoInput.value==="CODE10";renderCart();};
+   document.getElementById("clear-cart-modal").onclick=()=>{cart=[];save();updateTop();renderProducts();renderCart();};
+   document.getElementById("checkout-btn").onclick=()=>{alert("Paid 😎");cart=[];save();location.reload();};
+   
+   document.getElementById("theme-btn").onclick=()=>{document.body.classList.toggle("dark");};
+   
+   [searchInput,categorySelect,minPriceInput,sortSelect].forEach(e=>e.addEventListener("input",renderProducts));
+   
+   updateTop();
+   renderProducts();
+   
