@@ -1,23 +1,23 @@
 let products = [
-    {id:1,title:"mini points",price:0.01,category:"currency",stock:true,image:"https://picsum.photos/300?1"},
-    {id:2,title:"mini Beans",price:1,category:"currency",stock:true,image:"https://picsum.photos/300?2"},
-    {id:3,title:"mini Coins",price:10,category:"currency",stock:true,image:"https://picsum.photos/300?3"},
+    {id:1,title:"mini points",price:0.01,category:"currency",stock:true,image:"images/image_part_001.JPG"},
+    {id:2,title:"mini Beans",price:1,category:"currency",stock:true,image:"images/image_part_002.JPG"},
+    {id:3,title:"mini Coins",price:10,category:"currency",stock:true,image:"images/image_part_003.JPG"},
    
-    {id:4,title:"minigun: phantom",price:150,category:"skins",stock:true,image:"https://picsum.photos/300?4"},
-    {id:5,title:"minigun: dragon",price:100,category:"skins",stock:true,image:"https://picsum.photos/300?5"},
-    {id:6,title:"minigun: gold",price:100,category:"skins",stock:false,image:"https://picsum.photos/300?6"},
+    {id:4,title:"minigun: phantom",price:150,category:"skins",stock:true,image:"images/image_part_004.JPG"},
+    {id:5,title:"minigun: dragon",price:100,category:"skins",stock:true,image:"images/image_part_005.JPG"},
+    {id:6,title:"minigun: gold",price:100,category:"skins",stock:false,image:"images/image_part_006.JPG"},
    
-    {id:7,title:"pistol: star crasher",price:120,category:"skins",stock:true,image:"https://picsum.photos/300?7"},
-    {id:8,title:"pistol: neon rider",price:80,category:"skins",stock:true,image:"https://picsum.photos/300?8"},
-    {id:9,title:"pistol: classic",price:50,category:"skins",stock:true,image:"https://picsum.photos/300?9"},
+    {id:7,title:"pistol: star crasher",price:120,category:"skins",stock:true,image:"images/image_part_007.JPG"},
+    {id:8,title:"pistol: neon rider",price:80,category:"skins",stock:true,image:"images/image_part_008.JPG"},
+    {id:9,title:"pistol: classic",price:50,category:"skins",stock:true,image:"images/image_part_009.JPG"},
    
-    {id:10,title:"rifle: thunder",price:180,category:"skins",stock:true,image:"https://picsum.photos/300?10"},
-    {id:11,title:"rifle: shadow",price:130,category:"skins",stock:true,image:"https://picsum.photos/300?11"},
-    {id:12,title:"rifle: blaze",price:90,category:"skins",stock:true,image:"https://picsum.photos/300?12"},
+    {id:10,title:"rifle: thunder",price:180,category:"skins",stock:true,image:"images/image_part_010.JPG"},
+    {id:11,title:"rifle: shadow",price:130,category:"skins",stock:true,image:"images/image_part_011.JPG"},
+    {id:12,title:"rifle: blaze",price:90,category:"skins",stock:true,image:"images/image_part_012.JPG"},
    
-    {id:13,title:"sniper: eagle eye",price:200,category:"skins",stock:true,image:"https://picsum.photos/300?13"},
-    {id:14,title:"sniper: ghost",price:160,category:"skins",stock:true,image:"https://picsum.photos/300?14"},
-    {id:15,title:"sniper: frost",price:110,category:"skins",stock:true,image:"https://picsum.photos/300?15"}
+    {id:13,title:"sniper: eagle eye",price:200,category:"skins",stock:true,image:"images/image_part_013.JPG"},
+    {id:14,title:"sniper: ghost",price:160,category:"skins",stock:true,image:"images/image_part_014.JPG"},
+    {id:15,title:"sniper: frost",price:110,category:"skins",stock:true,image:"images/image_part_015.JPG"}
    ];
    
    let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -37,6 +37,37 @@ let products = [
    const cartTotal = document.getElementById("cart-total");
    const promoInput = document.getElementById("promo-input");
    
+   const productsContainer = document.getElementById("products");
+
+
+  
+
+function renderProducts() {
+  productsContainer.innerHTML = "";
+
+  products.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "product-card";
+
+    const img = document.createElement("img");
+    img.src = product.image;
+    img.alt = product.title;
+
+    const title = document.createElement("h3");
+    title.textContent = product.title;
+
+    const price = document.createElement("p");
+    price.textContent = product.price + " $";
+
+    card.append(img, title, price);
+    productsContainer.appendChild(card);
+  });
+}
+
+renderProducts();
+
+
+
    function save(){ localStorage.setItem("cart",JSON.stringify(cart)); }
    
    function grouped(){

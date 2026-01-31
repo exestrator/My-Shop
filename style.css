@@ -168,6 +168,22 @@ body.dark .modal-content { background:#111; }
 
 footer { text-align: center; margin-top: 30px; color: white; }
 
-/* responsive */
+
 @media (max-width:900px){ .products { grid-template-columns: repeat(2,1fr); } }
 @media (max-width:500px){ .products { grid-template-columns: 1fr; } }
+
+/* 🔥 FORCE MOBILE GRID */
+@media (max-width: 768px) {
+    .products {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      width: 100% !important;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .products {
+      grid-template-columns: 1fr !important;
+    }
+  }
+  
